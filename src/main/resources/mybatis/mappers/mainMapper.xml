@@ -4,12 +4,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
  
 <mapper namespace="com.home.work.mapper.MainMapper">
- 
-<!--     <select id="testList" resultType="com.home.work.domain.MainVO">
-        select * from s_score
-    </select> -->
     
-    <select id="tableList" parameterType="com.home.work.domain.MainVO" resultType="com.home.work.domain.MainVO">
+    <select id="tableList" parameterType="hashmap" resultType="com.home.work.domain.MainVO">
     <![CDATA[
 SELECT CD_NM||NVL2(REGION_AREA,'=>'||REGION_AREA,'합계') NM
       ,COL1||'('||TRUNC((COL1/TOT*100),2)||'%)'||(DECODE(COL1, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
@@ -72,9 +68,9 @@ WHERE AREA_CD=CD_ID(+)
     ]]>
     </select>
     
-    <select id="lastTest" parameterType="java.util.Map" resultType="com.home.work.domain.InputVO">
+    <select id="lastTest" parameterType="hashmap" resultType="mainVO">
     	<![CDATA[
-    	SELECT CD_NM||NVL2(REGION_AREA,'=>'||REGION_AREA,'합계') NM
+SELECT CD_NM||NVL2(REGION_AREA,'=>'||REGION_AREA,'합계') NM
       ,COL1||'('||TRUNC((COL1/TOT*100),2)||'%)'||(DECODE(COL1, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
            ||DECODE(COL1,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'▼'))||DECODE(ZO,0,'*'||RK1) COL1
       ,COL2||'('||TRUNC((COL2/TOT*100),2)||'%)'||(DECODE(COL2, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
@@ -119,8 +115,8 @@ FROM (
         ,SUM(DECODE(PROD_ID,'00009',RK)) RK9
         ,SUM(DECODE(PROD_ID,'00010',RK)) RK10
         ,SUM(CCT) TOT
-        ,(GROUPING(AREA_CD)||GROUPING(REGION_AREA))*DECODE(#{dir,jdbcType=VARCHAR},'F',1,-1) ZO
-        ,DECODE(AREA_CD,'10',#{ord1,jdbcType=VARCHAR},1,'20',#{ord2,jdbcType=VARCHAR},'30',#{ord3,jdbcType=VARCHAR},'40',#{ord4,jdbcType=VARCHAR},'60',#{ord6,jdbcType=VARCHAR},'70',#{ord7,jdbcType=VARCHAR}) ORD
+        ,(GROUPING(AREA_CD)||GROUPING(REGION_AREA))*DECODE(#{dir},'F',1,(-1)) ZO
+        ,DECODE(AREA_CD,'10',#{ord1},'20',#{ord2},'30',#{ord3},'40',#{ord4},'50',null,'60',#{ord6},'70',#{ord7}) ORD
     FROM(
         SELECT AREA_CD
               ,REGION_AREA
@@ -128,12 +124,12 @@ FROM (
               ,SUM(SALES_CNT) CCT
               ,RANK() OVER(PARTITION BY AREA_CD,REGION_AREA ORDER BY SUM(SALES_CNT) DESC) RK
         FROM SALE_TBL
-        WHERE ROWNUM <#{cnt,jdbcType=VARCHAR} AND AREA_CD=NVL(#{location,jdbcType=VARCHAR},AREA_CD)
+        WHERE ROWNUM <=NVL(#{cnt},100000) AND AREA_CD=NVL(#{location},AREA_CD)
         GROUP BY AREA_CD,REGION_AREA,PROD_ID
         )
     GROUP BY ROLLUP (AREA_CD,REGION_AREA)
     ), CD_TBL
-WHERE AREA_CD=CD_ID(+) AND ZO IN (DECODE(NVL(#{lvl,jdbcType=VARCHAR},1),1,ZO,2,'0',3,'1'),DECODE(#{lvl,jdbcType=VARCHAR},3,'11'))
+WHERE AREA_CD=CD_ID(+) AND ZO IN (DECODE(NVL(#{lvl},1),1,ZO,2,'0',3,'1'),DECODE(#{lvl},3,'11'))
 ORDER BY NVL(ORD,RPAD(SUBSTR(AREA_CD,1,1),1,0)),ZO
     	]]>
     </select>

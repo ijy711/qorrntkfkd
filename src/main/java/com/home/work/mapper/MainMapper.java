@@ -10,7 +10,5 @@ public interface MainMapper {
 
 	public List<InputVO> testList(InputVO testInput) throws Exception;
 	
-	public List<MainVO> tableList() throws Exception;
-	
-	public List<Map> lastTest(Map map) throws Exception;
+	public List<MainVO> lastTest(Map map) throws Exception;
 }

@@ -33,27 +33,33 @@ public class MainController {
 	
 	@RequestMapping("/testtable")
 	public ModelAndView getList(HttpServletRequest request) throws Exception {
-		List<MainVO> list = mainMapper.tableList();
+		Map map = new HashMap();
 		
+		long start = System.currentTimeMillis();
+		
+		map.put("location", request.getParameter("location")==""?null:request.getParameter("location"));
+		map.put("ord1", request.getParameter("ord1")==""?null:request.getParameter("ord1"));
+		map.put("ord2", request.getParameter("ord2")==""?null:request.getParameter("ord2"));
+		map.put("ord3", request.getParameter("ord3")==""?null:request.getParameter("ord3"));
+		map.put("ord4", request.getParameter("ord4")==""?null:request.getParameter("ord4"));
+		map.put("ord6", request.getParameter("ord6")==""?null:request.getParameter("ord6"));
+		map.put("ord7", request.getParameter("ord7")==""?null:request.getParameter("ord7"));
+		map.put("cnt", request.getParameter("cnt")==""?100000:request.getParameter("cnt"));
+		map.put("lvl", request.getParameter("lvl")==""?null:request.getParameter("lvl"));
+		map.put("dir", request.getParameter("dir")==""?null:request.getParameter("dir"));
+		
+		List<MainVO> list = mainMapper.lastTest(map);
+		
+		long end = System.currentTimeMillis();
+		long sec = end-start;
+		float time = (float)sec/1000;
+		
+		request.setAttribute("time", time);
+		
+		System.out.println(map);
 		System.out.println(list);
 		
-		
-		Map map = new HashMap();
-		map.put("location", request.getParameter("location"));
-		map.put("ord1", request.getParameter("ord1"));
-		map.put("ord2", request.getParameter("ord2"));
-		map.put("ord3", request.getParameter("ord3"));
-		map.put("ord4", request.getParameter("ord4"));
-		map.put("ord6", request.getParameter("ord6"));
-		map.put("ord7", request.getParameter("ord7"));
-		map.put("cnt", request.getParameter("cnt"));
-		map.put("lvl", request.getParameter("lvl"));
-		map.put("dir", request.getParameter("dir"));
-		
-		MainVO vo = new MainVO();
-		
 		return new ModelAndView("testtable","list",list);
-		/*return new ModelAndView("testtable","list",map);*/
 	}
 	
 	/*@RequestMapping("/testtable")
@@ -61,8 +67,8 @@ public class MainController {
 		List<MainVO> list= mainMapper.tableList();
 		
 		return new ModelAndView("testtable","list",list);
-	}*/
-	
+	}
+
 	@RequestMapping("/test")
 	public ModelAndView testList(HttpServletRequest request) throws Exception {
 		InputVO testInput = new InputVO();
@@ -93,6 +99,6 @@ public class MainController {
 		System.out.println(request.getParameter("lvl"));
 		
 		return ("/");
-	}
+	}*/
 
 }

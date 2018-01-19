@@ -1,20 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-	String test = request.getParameter("location");
-	System.out.println(test);
-%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ko">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- jquery -->
+<script src="//code.jquery.com/jquery.min.js"></script>
+<!-- bootstrap cdn -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<!-- java script -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <title>test</title>
 </head>
 <body>
-The String is = <%=test %>;
+<%Object rTime = request.getAttribute("time");%>
 <div class="result">
-	<table class="resultTable">
+	<h2 style="text-align:center;">소요시간 : <span style="color:red"><%=rTime %> sec</span></h2>
+	<table class="table">
 		<tr>
 			<th>NAME</th>
 			<th>안마기</th>
@@ -29,20 +34,20 @@ The String is = <%=test %>;
 			<th>세탁기</th>
 			<th>TOT</th>
 		</tr>
-		<c:forEach var="table" items="${list}">
+		<c:forEach var="result" items="${list}">
 		<tr>
-			<td>${table.nm}</td>
-			<td>${table.col1}</td>
-			<td>${table.col2}</td>
-			<td>${table.col3}</td>
-			<td>${table.col4}</td>
-			<td>${table.col5}</td>
-			<td>${table.col6}</td>
-			<td>${table.col7}</td>
-			<td>${table.col8}</td>
-			<td>${table.col9}</td>
-			<td>${table.col10}</td>
-			<td>${table.tot}</td>
+			<td>${result.nm}</td>
+			<td>${result.col1}</td>
+			<td>${result.col2}</td>
+			<td>${result.col3}</td>
+			<td>${result.col4}</td>
+			<td>${result.col5}</td>
+			<td>${result.col6}</td>
+			<td>${result.col7}</td>
+			<td>${result.col8}</td>
+			<td>${result.col9}</td>
+			<td>${result.col10}</td>
+			<td>${result.tot}</td>
 		</tr>
 		</c:forEach>
 	</table>

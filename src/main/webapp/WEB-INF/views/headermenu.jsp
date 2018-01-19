@@ -52,11 +52,11 @@
 	}
 </script>
 <div class="header" style="padding-top:100px; height: 200px; text-align:center; font-size: 18px;">
-<form name="frameForm" method="post">
+<form name="frameForm"  method="post">
 <div class="header-fir">
 	<p>
 	<select name="location" style="width:100px;margin-right:50px;">
-		<option value="test" selected>전체</option>
+		<option value="" selected>전체</option>
 			<option value="10">서울</option>
 			<option value="20">부산</option>	
 			<option value="30">광주</option>	
@@ -78,11 +78,11 @@
 		<input type="text" name="cnt" style="width:150px;height:25px;">
 		</span>
 		<span>우선순위 :
-		<input type="radio" name="dir" value="F">데이터우선
+		<input type="radio" name="dir" value="F" checked>데이터우선
 		<input type="radio" name="dir" value="R">총계우선
 		</span>
 		<span>보기레벨 :
-		<input type="radio" name="lvl" value="1">전체
+		<input type="radio" name="lvl" value="1" checked>전체
 		<input type="radio" name="lvl" value="2">1단계
 		<input type="radio" name="lvl" value="3">2단계
 		</span>
@@ -93,6 +93,6 @@
 </div>
 </form>
 </div>
-<iframe width="100%" height="600px" name="formTest" src="testtable"></iframe>
+<iframe width="100%" height="600px" scrolling="auto" name="formTest" src="testtable"></iframe>
 </body>
 </html>
