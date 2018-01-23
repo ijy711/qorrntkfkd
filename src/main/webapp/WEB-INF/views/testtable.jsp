@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ko">
 <head>
@@ -14,13 +14,19 @@
 <!-- java script -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <title>test</title>
+<style type="text/css">
+</style>
 </head>
 <body>
-<%Object rTime = request.getAttribute("time");%>
+<script type="text/javascript">
+</script>
+<% 
+	Object rTime = request.getAttribute("time");
+%>
 <div class="result">
 	<h2 style="text-align:center;">소요시간 : <span style="color:red"><%=rTime %> sec</span></h2>
-	<table class="table">
-		<tr>
+	<table id="value-table" class="table">
+		<tr style="background-color:Gold">
 			<th>NAME</th>
 			<th>안마기</th>
 			<th>냉장고</th>
@@ -35,20 +41,41 @@
 			<th>TOT</th>
 		</tr>
 		<c:forEach var="result" items="${list}">
-		<tr>
-			<td>${result.nm}</td>
-			<td>${result.col1}</td>
-			<td>${result.col2}</td>
-			<td>${result.col3}</td>
-			<td>${result.col4}</td>
-			<td>${result.col5}</td>
-			<td>${result.col6}</td>
-			<td>${result.col7}</td>
-			<td>${result.col8}</td>
-			<td>${result.col9}</td>
-			<td>${result.col10}</td>
-			<td>${result.tot}</td>
-		</tr>
+			<c:set var="nm" value="${result.nm}"/>
+			<c:choose>
+			<c:when test="${fn:contains(nm,'합계')}">
+				<tr style="background-color:GreenYellow">
+					<td>${result.nm}</td>
+					<td>${result.col1}</td>
+					<td>${result.col2}</td>
+					<td>${result.col3}</td>
+					<td>${result.col4}</td>
+					<td>${result.col5}</td>
+					<td>${result.col6}</td>
+					<td>${result.col7}</td>
+					<td>${result.col8}</td>
+					<td>${result.col9}</td>
+					<td>${result.col10}</td>
+					<td>${result.tot}</td>
+				</tr>
+			</c:when>
+			<c:otherwise>
+				<tr>
+					<td>${result.nm}</td>
+					<td>${result.col1}</td>
+					<td>${result.col2}</td>
+					<td>${result.col3}</td>
+					<td>${result.col4}</td>
+					<td>${result.col5}</td>
+					<td>${result.col6}</td>
+					<td>${result.col7}</td>
+					<td>${result.col8}</td>
+					<td>${result.col9}</td>
+					<td>${result.col10}</td>
+					<td>${result.tot}</td>
+				</tr>
+				</c:otherwise>
+				</c:choose>
 		</c:forEach>
 	</table>
 </div>

@@ -47,8 +47,12 @@
 <script type="text/javascript">
 	function sendData() {
 		document.frameForm.target="formTest";
-		document.frameForm.action="testtable";
+		document.frameForm.action="table";
 		document.frameForm.submit();
+	}
+	
+	function openChart() {
+		window.open("chart.jsp", "_blank", "width=400px","height=300px","resizable=1","scrollbars=1");
 	}
 </script>
 <div class="header" style="padding-top:100px; height: 200px; text-align:center; font-size: 18px;">
@@ -62,7 +66,7 @@
 			<option value="30">광주</option>	
 			<option value="40">대전</option>	
 			<option value="60">인천</option>	
-			<option value="70">아산</option>	
+			<option value="70">아산</option>
 	</select>
 	정렬 : 
 	서울 <input class="loc-order" type="text" name="ord1"> 
@@ -92,7 +96,10 @@
 	</div>
 </div>
 </form>
+<form>
+	<input type="button" onclick="javascript:openChart();" value="chart">
+</form>
 </div>
-<iframe width="100%" height="600px" scrolling="auto" name="formTest" src="testtable"></iframe>
+<iframe width="100%" height="600px" scrolling="auto" name="formTest" src="table"></iframe>
 </body>
 </html>

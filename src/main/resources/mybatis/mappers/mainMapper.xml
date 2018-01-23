@@ -5,92 +5,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
 <mapper namespace="com.home.work.mapper.MainMapper">
     
-    <select id="tableList" parameterType="hashmap" resultType="com.home.work.domain.MainVO">
-    <![CDATA[
-SELECT CD_NM||NVL2(REGION_AREA,'=>'||REGION_AREA,'합계') NM
-      ,COL1||'('||TRUNC((COL1/TOT*100),2)||'%)'||(DECODE(COL1, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
-           ||DECODE(COL1,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'▼'))||'*'||RK1 COL1
-      ,COL2||'('||TRUNC((COL2/TOT*100),2)||'%)'||(DECODE(COL2, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
-           ||DECODE(COL2,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'▼'))||'*'||RK2 COL2
-      ,COL3||'('||TRUNC((COL3/TOT*100),2)||'%)'||(DECODE(COL3, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
-           ||DECODE(COL3,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'▼'))||'*'||RK3 COL3
-      ,COL4||'('||TRUNC((COL4/TOT*100),2)||'%)'||(DECODE(COL4, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
-           ||DECODE(COL4,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'▼'))||'*'||RK4 COL4
-      ,COL5||'('||TRUNC((COL5/TOT*100),2)||'%)'||(DECODE(COL5, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
-           ||DECODE(COL5,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'▼'))||'*'||RK5 COL5
-      ,COL6||'('||TRUNC((COL6/TOT*100),2)||'%)'||(DECODE(COL6, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
-           ||DECODE(COL6,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'▼'))||'*'||RK6 COL6
-      ,COL7||'('||TRUNC((COL7/TOT*100),2)||'%)'||(DECODE(COL7, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
-           ||DECODE(COL7,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'▼'))||'*'||RK7 COL7
-      ,COL8||'('||TRUNC((COL8/TOT*100),2)||'%)'||(DECODE(COL8, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
-           ||DECODE(COL8,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'▼'))||'*'||RK8 COL8
-      ,COL9||'('||TRUNC((COL9/TOT*100),2)||'%)'||(DECODE(COL9, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
-           ||DECODE(COL9,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'▼'))||'*'||RK9 COL9
-      ,COL10||'('||TRUNC((COL10/TOT*100),2)||'%)'||(DECODE(COL10, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
-            ||DECODE(COL10,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'▼'))||'*'||RK10 COL10
-      ,TOT
-FROM (
-    SELECT AREA_CD, REGION_AREA
-        ,MIN(DECODE(PROD_ID,'00001',CCT)) COL1
-        ,MIN(DECODE(PROD_ID,'00002',CCT)) COL2
-        ,MIN(DECODE(PROD_ID,'00003',CCT)) COL3
-        ,MIN(DECODE(PROD_ID,'00004',CCT)) COL4
-        ,MIN(DECODE(PROD_ID,'00005',CCT)) COL5
-        ,MIN(DECODE(PROD_ID,'00006',CCT)) COL6
-        ,MIN(DECODE(PROD_ID,'00007',CCT)) COL7
-        ,MIN(DECODE(PROD_ID,'00008',CCT)) COL8
-        ,MIN(DECODE(PROD_ID,'00009',CCT)) COL9
-        ,MIN(DECODE(PROD_ID,'00010',CCT)) COL10
-        ,MIN(DECODE(PROD_ID,'00001',RK)) RK1
-        ,MIN(DECODE(PROD_ID,'00002',RK)) RK2
-        ,MIN(DECODE(PROD_ID,'00003',RK)) RK3
-        ,MIN(DECODE(PROD_ID,'00004',RK)) RK4
-        ,MIN(DECODE(PROD_ID,'00005',RK)) RK5
-        ,MIN(DECODE(PROD_ID,'00006',RK)) RK6
-        ,MIN(DECODE(PROD_ID,'00007',RK)) RK7
-        ,MIN(DECODE(PROD_ID,'00008',RK)) RK8
-        ,MIN(DECODE(PROD_ID,'00009',RK)) RK9
-        ,MIN(DECODE(PROD_ID,'00010',RK)) RK10
-        ,SUM(CCT) TOT
-    FROM(
-        SELECT AREA_CD
-              ,REGION_AREA
-              ,PROD_ID
-              ,SUM(SALES_CNT) CCT
-              ,RANK() OVER(PARTITION BY AREA_CD,REGION_AREA ORDER BY SUM(SALES_CNT) DESC) RK
-        FROM SALE_TBL
-        WHERE ROWNUM <100000
-        GROUP BY AREA_CD,REGION_AREA,PROD_ID
-        )
-    GROUP BY ROLLUP (AREA_CD,REGION_AREA)
-    ), CD_TBL
-WHERE AREA_CD=CD_ID(+)
-    ]]>
-    </select>
-    
     <select id="lastTest" parameterType="hashmap" resultType="mainVO">
     	<![CDATA[
 SELECT CD_NM||NVL2(REGION_AREA,'=>'||REGION_AREA,'합계') NM
-      ,COL1||'('||TRUNC((COL1/TOT*100),2)||'%)'||(DECODE(COL1, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
-           ||DECODE(COL1,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'▼'))||DECODE(ZO,0,'*'||RK1) COL1
-      ,COL2||'('||TRUNC((COL2/TOT*100),2)||'%)'||(DECODE(COL2, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
-           ||DECODE(COL2,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'▼'))||DECODE(ZO,0,'*'||RK2) COL2
-      ,COL3||'('||TRUNC((COL3/TOT*100),2)||'%)'||(DECODE(COL3, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
-           ||DECODE(COL3,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'▼'))||DECODE(ZO,0,'*'||RK3) COL3
-      ,COL4||'('||TRUNC((COL4/TOT*100),2)||'%)'||(DECODE(COL4, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
-           ||DECODE(COL4,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'▼'))||DECODE(ZO,0,'*'||RK4) COL4
-      ,COL5||'('||TRUNC((COL5/TOT*100),2)||'%)'||(DECODE(COL5, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
-           ||DECODE(COL5,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'▼'))||DECODE(ZO,0,'*'||RK5) COL5
-      ,COL6||'('||TRUNC((COL6/TOT*100),2)||'%)'||(DECODE(COL6, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
-           ||DECODE(COL6,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'▼'))||DECODE(ZO,0,'*'||RK6) COL6
-      ,COL7||'('||TRUNC((COL7/TOT*100),2)||'%)'||(DECODE(COL7, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
-           ||DECODE(COL7,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'▼'))||DECODE(ZO,0,'*'||RK7) COL7
-      ,COL8||'('||TRUNC((COL8/TOT*100),2)||'%)'||(DECODE(COL8, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
-           ||DECODE(COL8,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'▼'))||DECODE(ZO,0,'*'||RK8) COL8
-      ,COL9||'('||TRUNC((COL9/TOT*100),2)||'%)'||(DECODE(COL9, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
-           ||DECODE(COL9,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'▼'))||DECODE(ZO,0,'*'||RK9) COL9
-      ,COL10||'('||TRUNC((COL10/TOT*100),2)||'%)'||(DECODE(COL10, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '▲')
-            ||DECODE(COL10,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'▼'))||DECODE(ZO,0,'*'||RK10) COL10
+      ,DECODE(COL1, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<cell style="background-color:LightPink">')||DECODE(COL1,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<cell style="background-color:LightBlue">')||
+      COL1||'('||TRUNC((COL1/TOT*100),2)||'%)'||(DECODE(COL1, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<span style="color:red">'||'▲')
+           ||DECODE(COL1,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<span style="color:blue">'||'▼'))||DECODE(ZO,0,'*'||RK1) COL1
+      ,DECODE(COL2, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<cell style="background-color:LightPink">')||DECODE(COL2,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<cell style="background-color:LightBlue">')||
+      COL2||'('||TRUNC((COL2/TOT*100),2)||'%)'||(DECODE(COL2, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<span style="color:red">'||'▲')
+           ||DECODE(COL2,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<span style="color:blue">'||'▼'))||DECODE(ZO,0,'*'||RK2) COL2
+      ,DECODE(COL3, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<span style="background-color:LightPink">')||DECODE(COL3,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<span style="background-color:LightBlue">')||
+      COL3||'('||TRUNC((COL3/TOT*100),2)||'%)'||(DECODE(COL3, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '<span style="color:red">'||'▲')
+           ||DECODE(COL3,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<span style="color:blue">'||'▼'))||DECODE(ZO,0,'*'||RK3) COL3
+      ,DECODE(COL4, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<cell style="background-color:LightPink">')||DECODE(COL4,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<cell style="background-color:LightBlue">')||
+      COL4||'('||TRUNC((COL4/TOT*100),2)||'%)'||(DECODE(COL4, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '<span style="color:red">'||'▲')
+           ||DECODE(COL4,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<span style="color:blue">'||'▼'))||DECODE(ZO,0,'*'||RK4) COL4
+      ,DECODE(COL5, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<cell style="background-color:LightPink">')||DECODE(COL5,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<cell style="background-color:LightBlue">')||
+      COL5||'('||TRUNC((COL5/TOT*100),2)||'%)'||(DECODE(COL5, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '<span style="color:red">'||'▲')
+           ||DECODE(COL5,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<span style="color:blue">'||'▼'))||DECODE(ZO,0,'*'||RK5) COL5
+      ,DECODE(COL6, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<cell style="background-color:LightPink">')||DECODE(COL6,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<cell style="background-color:LightBlue">')||
+      COL6||'('||TRUNC((COL6/TOT*100),2)||'%)'||(DECODE(COL6, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '<span style="color:red">'||'▲')
+           ||DECODE(COL6,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<span style="color:blue">'||'▼'))||DECODE(ZO,0,'*'||RK6) COL6
+      ,DECODE(COL7, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<cell style="background-color:LightPink">')||DECODE(COL7,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<cell style="background-color:LightBlue">')||
+      COL7||'('||TRUNC((COL7/TOT*100),2)||'%)'||(DECODE(COL7, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '<span style="color:red">'||'▲')
+           ||DECODE(COL7,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<span style="color:blue">'||'▼'))||DECODE(ZO,0,'*'||RK7) COL7
+      ,DECODE(COL8, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<cell style="background-color:LightPink">')||DECODE(COL8,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<cell style="background-color:LightBlue">')||
+      COL8||'('||TRUNC((COL8/TOT*100),2)||'%)'||(DECODE(COL8, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '<span style="color:red">'||'▲')
+           ||DECODE(COL8,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<span style="color:blue">'||'▼'))||DECODE(ZO,0,'*'||RK8) COL8
+      ,DECODE(COL9, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<cell style="background-color:LightPink">')||DECODE(COL9,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<cell style="background-color:LightBlue">')||
+      COL9||'('||TRUNC((COL9/TOT*100),2)||'%)'||(DECODE(COL9, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '<span style="color:red">'||'▲')
+           ||DECODE(COL9,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<span style="color:blue">'||'▼'))||DECODE(ZO,0,'*'||RK9) COL9
+      ,DECODE(COL10, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<cell style="background-color:LightPink">')||DECODE(COL10,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<cell style="background-color:LightBlue">')||
+      COL10||'('||TRUNC((COL10/TOT*100),2)||'%)'||(DECODE(COL10, GREATEST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10), '<span style="color:red">'||'▲')
+            ||DECODE(COL10,LEAST(COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, COL10),'<span style="color:blue">'||'▼'))||DECODE(ZO,0,'*'||RK10) COL10
       ,TOT
 FROM (
     SELECT AREA_CD, REGION_AREA
@@ -115,7 +62,7 @@ FROM (
         ,SUM(DECODE(PROD_ID,'00009',RK)) RK9
         ,SUM(DECODE(PROD_ID,'00010',RK)) RK10
         ,SUM(CCT) TOT
-        ,(GROUPING(AREA_CD)||GROUPING(REGION_AREA))*DECODE(#{dir},'F',1,(-1)) ZO
+        ,(GROUPING(AREA_CD)||GROUPING(REGION_AREA)) ZO
         ,DECODE(AREA_CD,'10',#{ord1},'20',#{ord2},'30',#{ord3},'40',#{ord4},'50',null,'60',#{ord6},'70',#{ord7}) ORD
     FROM(
         SELECT AREA_CD
@@ -129,8 +76,30 @@ FROM (
         )
     GROUP BY ROLLUP (AREA_CD,REGION_AREA)
     ), CD_TBL
-WHERE AREA_CD=CD_ID(+) AND ZO IN (DECODE(NVL(#{lvl},1),1,ZO,2,'0',3,'1'),DECODE(#{lvl},3,'11'))
-ORDER BY NVL(ORD,RPAD(SUBSTR(AREA_CD,1,1),1,0)),ZO
+WHERE AREA_CD=CD_ID(+) AND ZO IN (DECODE(NVL(#{lvl},1),1,ZO,2,'00',3,'01'),DECODE(#{lvl},3,'11'))
+ORDER BY NVL(ORD,RPAD(SUBSTR(AREA_CD,1,1),1,0)),ZO*DECODE(#{dir},'R',-1,1)
+    	]]>
+    </select>
+    
+    <select id="testChart" resultType="mainVO">
+    	<![CDATA[
+    			SELECT AREA_CD
+                        ,REGION_AREA location
+                        ,SUM(DECODE(PROD_ID, '00001', SALES_CNT)) COL1
+                        ,SUM(DECODE(PROD_ID, '00002', SALES_CNT)) COL2
+                        ,SUM(DECODE(PROD_ID, '00003', SALES_CNT)) COL3
+                        ,SUM(DECODE(PROD_ID, '00004', SALES_CNT)) COL4
+                        ,SUM(DECODE(PROD_ID, '00005', SALES_CNT)) COL5
+                        ,SUM(DECODE(PROD_ID, '00006', SALES_CNT)) COL6
+                        ,SUM(DECODE(PROD_ID, '00007', SALES_CNT)) COL7
+                        ,SUM(DECODE(PROD_ID, '00008', SALES_CNT)) COL8
+                        ,SUM(DECODE(PROD_ID, '00009', SALES_CNT)) COL9
+                        ,SUM(DECODE(PROD_ID, '00010', SALES_CNT)) COL10
+                        ,GROUPING(AREA_CD)||GROUPING(REGION_AREA) ZO
+                        ,SUM(SALES_CNT) TOT
+                  FROM SALE_TBL
+                  WHERE ROWNUM <= 100000
+                  GROUP BY ROLLUP(AREA_CD, REGION_AREA)
     	]]>
     </select>
  

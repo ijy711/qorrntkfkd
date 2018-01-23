@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +32,7 @@ public class MainController {
 		return new ModelAndView("headermenu");
 	}
 	
-	@RequestMapping("/testtable")
+	@RequestMapping("/table")
 	public ModelAndView getList(HttpServletRequest request) throws Exception {
 		Map map = new HashMap();
 		
@@ -55,6 +56,7 @@ public class MainController {
 		float time = (float)sec/1000;
 		
 		request.setAttribute("time", time);
+		request.setAttribute("list", list);
 		
 		System.out.println(map);
 		System.out.println(list);
@@ -62,14 +64,23 @@ public class MainController {
 		return new ModelAndView("testtable","list",list);
 	}
 	
-	/*@RequestMapping("/testtable")
+	@RequestMapping("/testchart")
+	public ModelAndView getChart(HttpServletRequest request) throws Exception {
+		List<MainVO> list = mainMapper.testChart();
+	
+		System.out.println(list);
+		/*model.addAttribute("chart", list);*/
+		return new ModelAndView("chart","chart",list);
+	}
+	
+	@RequestMapping("/testtable")
 	public ModelAndView list(HttpServletRequest request) throws Exception{
-		List<MainVO> list= mainMapper.tableList();
+		List<MainVO> list= mainMapper.testChart();
 		
-		return new ModelAndView("testtable","list",list);
+		return new ModelAndView("chart","list",list);
 	}
 
-	@RequestMapping("/test")
+	/*@RequestMapping("/test")
 	public ModelAndView testList(HttpServletRequest request) throws Exception {
 		InputVO testInput = new InputVO();
 		testInput.setLocation("10");
