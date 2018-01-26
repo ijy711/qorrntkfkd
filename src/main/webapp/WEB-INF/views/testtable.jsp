@@ -13,8 +13,11 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <!-- java script -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<title>test</title>
+<title>table</title>
 <style type="text/css">
+.table-condensed {
+	font-size:10px;
+}
 </style>
 </head>
 <body>
@@ -23,10 +26,14 @@
 <% 
 	Object rTime = request.getAttribute("time");
 %>
-<div class="result">
+<div>
+	<form action="chart.jsp" method="post"></form>
+</div>
+<div>
 	<h2 style="text-align:center;">소요시간 : <span style="color:red"><%=rTime %> sec</span></h2>
-	<table id="value-table" class="table">
-		<tr style="background-color:Gold">
+	<table id="value-table" class="table table-condensed">
+		<thead>
+		<tr style="background-color:Gold;">
 			<th>NAME</th>
 			<th>안마기</th>
 			<th>냉장고</th>
@@ -40,6 +47,8 @@
 			<th>세탁기</th>
 			<th>TOT</th>
 		</tr>
+		</thead>
+		<tbody>
 		<c:forEach var="result" items="${list}">
 			<c:set var="nm" value="${result.nm}"/>
 			<c:choose>
@@ -77,6 +86,7 @@
 				</c:otherwise>
 				</c:choose>
 		</c:forEach>
+		</tbody>
 	</table>
 </div>
 </body>

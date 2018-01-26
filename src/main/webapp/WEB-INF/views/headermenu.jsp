@@ -51,8 +51,11 @@
 		document.frameForm.submit();
 	}
 	
-	function openChart() {
-		window.open("chart.jsp", "_blank", "width=400px","height=300px","resizable=1","scrollbars=1");
+	function openPop() {
+		var url = "chart";
+		var name = "The Chart";
+		
+		window.open(url,name,"width=800,height=1000,toolbar=no,status=0,location=no,scrollbars=auto,resizable=yes");
 	}
 </script>
 <div class="header" style="padding-top:100px; height: 200px; text-align:center; font-size: 18px;">
@@ -92,14 +95,12 @@
 		</span>
 		<span>
 		<input type="button" onclick="javascript:sendData();" value="검색">
+		<input type="button" onclick="javascript:openPop();" value="차트보기">
 		</span>
 	</div>
 </div>
 </form>
-<form>
-	<input type="button" onclick="javascript:openChart();" value="chart">
-</form>
 </div>
-<iframe width="100%" height="600px" scrolling="auto" name="formTest" src="table"></iframe>
+<iframe width="1350px" height="1200px" name="formTest" scrolling="auto" src="table"></iframe>
 </body>
 </html>
